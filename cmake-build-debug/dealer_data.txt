@@ -1,0 +1,28 @@
+Dealer data:
+Row number: 0
+|               |               |               |
+Row number: 1
+|               |               |               |
+Row number: 2
+|               |               |               |               |
+Row number: 3
+|               |               |               |               |
+
+Ownerships of sold vehicles:
+
+##################
+$ Make: Fiat     $
+$ Owner: Mateusz $
+##################
+
+################
+$ Make: BMW    $
+$ Owner: Kazik $
+################
+
+
+Dealer's budget at the end was 522210
+
+Vehicles in the garage:
+Fiat	Type: touristic
+BMW	Number of doors: 5

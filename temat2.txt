@@ -1,0 +1,109 @@
+                                            Tryby pracy programu
+
+Kod umożliwia uruchomienie programu z poziomu wiersza polecenia. Po ustaleniu odpowieniej ścieżki i kompilacji:
+- w przypadku podania tylko nazwy pliku wynikowego .exe wymagane dane wprowadza użytkownik,
+- jeśli oprócz nazwa_pliku.exe podany zostanie ciąg "-i stdin(...).txt" (ze spacją lub bez) strumień wejściowy
+przekierowywany jest do podanego pliku.
+stdin_b.txt - plik testujący opcje rowerowe.
+stdin_fd.txt - plik testujący opcje fabryki i komisu.
+stdin_all.txt - plik testujący całość programu.
+
+***********************************************************************************************************************
+                                            Informacje ogólne
+
+Program ma 3 zasadnicze części:
+1. Praca z Fabryką oraz Komisem - koniec pracy z fabryką oznacza przejście do komisu, przy czym program zabezpieczony
+jest przed próbami pracy z tymi obiektami bez uprzedniego stworzenia pojazdu.
+Użytkownik podaje, jaki typ pojazdu chce  stworzyć oraz ile ma ich być. Za pomocą wyjątków obsłużone są m. in. sytuacje
+podania zbyt dużej ilości aut lub złego typu pojazdu.
+Tworzenie pojazdów silnikowych polega na podaniu marki pojazdu. Pozostałe składowe są albo losowane podczas wykonywania
+programu, albo zależne od wybranych / wylosowanych cech.
+
+2. Praca z Rowerem - z uwagi na całkowicie inną specyfikację klasy zabawa z tym typem odbywa się w oddzielnym menu.
+Obiekty tego typu również tworzone są na podstawie losowych cech - użytkownik określa tylko, czy rower ma mieć koszyk.
+
+3. Praca z plikami - zmiana względem etapu 1.
+Odczytanie zawartości plików z danymi odbywa się z poziomu menu głównego, przy czym istnieją osobne pliki
+dla części 1 oraz 2.
+Zapis postępów pracy możliwy jest natomiast z menu odpowiednich części programu. Program nie zapisuje do pliku
+automatycznie.
+
+***********************************************************************************************************************
+
+Definicje wyjątków (jako struktury dziedziczące po std::exception) zostały umieszczone w pliku nagłówkowym "exceptions.h".
+Wyjątki mogą zostać rzucone we wczesnych (zależnie od wyboru) etapach programu, aby nie trzeba było zaczynać pracy
+z programem od nowa. Wyjątki są rzucane:
+- kiedy podany zostanie zbyt duży rozmiar fabryki,
+- kiedy podana liczba określająca rozmiar fabryki nie będzie nieujemna,
+- kiedy przy wyborze typu pojazdu wprowadzone zostaną wartości inne niż "car" lub "motorcycle",
+- kiedy zechcemy utworzyć więcej pojazdów niż jest miejsca w fabryce,
+- kiedy wprowadzona zostanie zła nazwa marki,
+- kiedy wprowadzona zostanie zła nazwa koloru.
+
+W celu usprawnienia pracy stworzona została funkcja enter_num(), która sprawdza poprawność wprowadzania liczb typu
+całkowitego. Jej definicja została umieszczona w pliku nagłówkowym, aby w razie potrzeby można było jej użyć w dowolnym
+pliku projektu.
+
+
+***********************************************************************************************************************
+
+                                        Schemat dziedziczenia:
+
+                                                Pojazd
+
+                          Pojazd silnikowy                  Rower
+                        (składowa typu Silnik)
+
+                    Samochód            Motocykl
+
+***********************************************************************************************************************
+
+                                        Informacje szczegółowe
+
+Klasa Pojazd ma składowe cena, pojemność, kolor oraz liczik kilometrów. Deklaruje ona przyjaźń z klasami Lakiernik oraz
+Komis, udostępniając swoje prywatne składniki. Jest klasą abstrakcyjną za sprawą czysto wirtualnej metody jazdy.
+Kontruktor tej klasy określa kolor powstającego pojazdu.
+Również metoda obliczania ceny pojazdu miała być wirtualna, jednak z uwagi na to, że jest ona używana w konstruktorach
+klas dziedziczących, koncept został porzucony.
+
+Klasa Pojazd silnikowy ma składowe:
+- typu wyliczeniowego enum (marka i typ paliwa),
+- obiekt typu Silnik,
+- typów wbudowanych (pojemność paliwa, spalanie oraz poziom paliwa (dla wszystkich nowych obiektów = 5)
+Klasa ta udostępnia metody zwracania niektórych składowych, tankowanie, definiuje zadeklarowaną wcześniej metodę jazdy
+oraz posiada przeładowane opratory wypisania na ekran dla obydwu typów wyliczeniowych, a dla typu "Marki" przeładowuje
+również operator standardowego wejścia.
+
+Klasa Silnik ma 4 zdefiniowane rodzaje za pomocą typu wyliczeniowego. Parametry każdego z rodzajów są z góry
+określone i niemożliwe do zmienienia w programie.
+
+Klasa Samochód określa, ile drzwi będzie miało dane auto - 3 lub 5. Posiada przeładowany operator wypisywania na ekran.
+
+Klasa Motocykl określa typ motocyklu za pomocą typu wyliczeniowego. Posiada przeładowany operator wypisywania na ekran
+dla typu wyliczeniowego oraz dla obiektów typu Motocykl.
+
+Klasa Rower określa typ powstającego roweru oraz pozwala na decyzję, czy rower ma mieć koszyk, czy nie. Posiadanie
+koszyka pociąga za sobą wzrost pojemności oraz ceny. Rowerem można się przejechać, zwiększa się wtedy licznik km
+oraz wyświetla wartość spalonych kalorii.
+
+***********************************************************************************************************************
+
+Fabryka jest obiektem, której składowymi, oprócz licznika pojazdów i zarobków, jest wektor 2D, który pełni rolę magazynu
+na stworzone pojazdy. Jego rozmiar definiuje użytkownik.
+Klasa posiada kilka prywatnych metod ułatwiających pracę na wektorze (wybór miejsca, sprawdzenie dostępności) oraz
+udostępnia publicznie metodę tworzenia pojazdów oraz zwracającą pojazd na wybranej pozycji.
+Po zakończeniu pracy z fabryką samochody są sprzedawane, stan zarobków modyfikowany, a wektor 2D jest czyszczony
+i redukowany do rozmiaru 0.
+Fabryka posiada również przeładowany operator wyświetlania "<<".
+
+Komis również posiada wektor 2D na pojazdy, a oprócz tego wektor 1D, pełniący rolę segregatora na akty właności
+sprzedanych przez komis pojazdów. Jest powiększany dynamicznie i osiąga wielkość zależną od ilości sprzedanych pojazdów.
+Klasa ta potrafi:
+- kupić pojazd,
+- sprzedać pojazd wystawiając "akt własności",
+- wyświetlić specyfikacje pojazdów w zależności od typu korzystając z przeładowanego operatora wypisania "<<".
+Jest zaprzyjaźniona z klasą Pojazd, dzięki czemu może modyfikować cenę i licznik kilometrów przechowywanych pojazdów.
+Tak jak fabryka, posiada pomocnicze metody do wyboru pojazdu z wektora.
+
+Lakiernik jest zaprzyjaźniony z klasą pojazd, co pozwala modyfikować mu kolor pojazdów. Z każdą zmianą koloru pojazdu
+jego zarobki rosną o 500.

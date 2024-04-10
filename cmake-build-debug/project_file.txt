@@ -1,0 +1,13 @@
+Dealer data:
+Row number: 0
+|               |               |               |               |
+Row number: 1
+|               |            BMW|               |               |
+Row number: 2
+|               |           Fiat|        Ferrari|               |
+Row number: 3
+|               |               |               |               |
+
+Ownerships of sold vehicles:
+
+Vehicles in the garage:

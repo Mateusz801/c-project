@@ -1,0 +1,25 @@
+Bikes:
+Type: touring
+Capacity: 1
+Color: white
+Price: 400
+Distance covered: 0
+
+Type: mountain
+Capacity: 10
+Color: white
+Price: 200
+Distance covered: 0
+
+Type: BMX
+Capacity: 1
+Color: blue
+Price: 600
+Distance covered: 50
+
+Type: touring
+Capacity: 10
+Color: green
+Price: 400
+Distance covered: 0
+

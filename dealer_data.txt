@@ -1,0 +1,27 @@
+Dealer data:
+Row number: 0
+|               |        Ferrari|               |               |
+Row number: 1
+|               |               |               |               |
+Row number: 2
+|               |               |           Fiat|               |               |
+Row number: 3
+|               |               |               |               |               |       Mercedes|
+
+Ownerships of sold vehicles:
+
+#################
+$ Make: Ferrari $
+$ Owner: Piotr  $
+#################
+
+###############
+$ Make: BMW   $
+$ Owner: Anna $
+###############
+
+
+Dealer's budget at the end was 399560
+
+Vehicles in the garage:
+BMW		Number of doors: 5

@@ -1,0 +1,21 @@
+Bikes:
+Type: road
+Capacity: 10
+Color: pink
+Distance covered: 0
+
+Type: mountain
+Capacity: 10
+Color: black
+Distance covered: 0
+
+Type: mountain
+Capacity: 10
+Color: grey
+Distance covered: 0
+
+Type: touring
+Capacity: 10
+Color: white
+Distance covered: 0
+
